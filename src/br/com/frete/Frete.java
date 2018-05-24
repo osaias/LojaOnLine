@@ -1,0 +1,66 @@
+package br.com.frete;
+
+
+import java.util.List;
+
+import Util.Servico;
+import br.com.compra.Produto;
+import br.com.transportadora.Transportadora;
+
+
+public class Frete {
+	
+	private String cepOrigem;
+	private String cepDestino;
+	private double valorPeso;
+	private double valorFrete;
+	private Servico transportador;
+	private List<Produto> produtos;
+	private String servico;
+	
+	public String getCepOrigem() {
+		return cepOrigem;
+	}
+	public void setCepOrigem(String cepOrigem) {
+		this.cepOrigem = cepOrigem;
+	}
+	public String getCepDestino() {
+		return cepDestino;
+	}
+	public void setCepDestino(String cepDestino) {
+		this.cepDestino = cepDestino;
+	}
+	public double getValorPeso() {
+		return valorPeso;
+	}
+	public void setValorPeso(double valorPeso) {
+		this.valorPeso = valorPeso;
+	}
+	public double getValorFrete() {
+		return valorFrete;
+	}
+	public void setValorFrete(double valorFrete) {
+		this.valorFrete = valorFrete;
+	}
+	public Servico getTransportador() {
+		return transportador;
+	}
+	public void setTransportador(Servico transportadora) {
+		this.transportador = transportadora;
+	}
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+	public String getServico() {
+		return servico;
+	}
+	public void setServico(String servico) {
+		this.servico = servico;
+	}
+
+	
+}
+	

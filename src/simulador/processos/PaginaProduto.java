@@ -27,8 +27,10 @@ import simulador.BancoDados.TabelaTransportadoras;
 public class PaginaProduto implements Logavel{
 	
 	PaginaCadastroUsuario linkPagCadUsuario = new PaginaCadastroUsuario();
+	PaginaCarrinho linkPagCarrinho = new PaginaCarrinho();
 	GestorDeServicos gestor = new GestorDeServicos();
 	Map<String,BigDecimal> fretes = new HashMap<>();
+	Usuario usuario = new Usuario();
 	
 	public boolean exibirProduto(Produto produto) {
 
@@ -40,53 +42,58 @@ public class PaginaProduto implements Logavel{
 		System.out.println(String.format("%1$-25s %2$-40s %3$-9s", "NOME", "DESCRIÇAO", "VALOR"));
 		System.out.println("---------------------------------------------------------------------------------");
 		System.out.println(String.format("%1$-25s %2$-40s %3$.2f", produto.getNome().toUpperCase(), produto.getDescricao(), produto.getPreco()));
-		
+
 		exibirFormasPgto(produto);
-		
+
 		System.out.println("\n\n");
 		System.out.println("     1 - VOLTAR         2 - COMPRAR \n");
 		System.out.println("--------------------------------------------------------------------------------");
 		System.out.println("                                                         3 - CALCULAR FRETE");
 		System.out.println("--------------------------------------------------------------------------------");
-		System.out.println("\n OPÇÃO: ");
 		
-		Scanner entrada = new Scanner(System.in);
-		int opcao = Integer.parseInt(entrada.nextLine());
-		
-		switch(opcao) {
-		case 1:
-			return false;
-		case 2:
-			comprar();
-			return true;
-		case 3:
-			System.out.println("\n\n C.E.P........:");
-			String cep = entrada.nextLine();
-			System.out.println("--------------------------------------------------------------------------------");
-			System.out.println("                            FRETES                                              ");
-			System.out.println("--------------------------------------------------------------------------------");
-			fretes = calcularFrete(produto, cep);
-			Set<String> chaves = fretes.keySet();
-			for (String chave : chaves)
-			{
-				if(chave != null)
-					System.out.println(chave + " - " + fretes.get(chave));
+		int opcao;
+		do {
+			
+			System.out.println("\n OPÇÃO: ");
+			Scanner entrada = new Scanner(System.in);
+			opcao = Integer.parseInt(entrada.nextLine());
+
+			switch(opcao) {
+			case 1:
+				return false;
+			case 2:
+				comprar(produto,fretes, usuario);
+				return true;
+			case 3:
+				System.out.println("\n\n C.E.P........:");
+				String cep = entrada.nextLine();
+				System.out.println("--------------------------------------------------------------------------------");
+				System.out.println("                            FRETES                                              ");
+				System.out.println("--------------------------------------------------------------------------------");
+				fretes = calcularFrete(produto, cep);
+				Set<String> chaves = fretes.keySet();
+				for (String chave : chaves)
+				{
+					if(chave != null)
+						System.out.println(chave + " - " + fretes.get(chave));
+				}
+				return true;
+			case 4:
+				if (logar()) {
+					System.out.println("Usuario Logado!!!" );
+				} else {
+					System.out.println("<<Deslogado>>");
+				}
+				return true;
+			case 5:
+				usuario = cadastrarUsuario();
+				if(usuario.isLogado()) {
+					System.out.println(usuario.getLogin().getEmail() + " Logado!!!" );
+				}
+				return true;
 			}
-			return true;
-		case 4:
-			if(logar()) {
-				//recursividade
-				this.exibirProduto(produto);
-			}
-			return true;
-		case 5:
-			Usuario usuario = cadastrarUsuario();
-			if(usuario.isLogado()) {
-				//recursividade
-				this.exibirProduto(produto);
-			}
-			return true;
-		}
+
+		} while (opcao != 1);
 		return false;
 	}
 
@@ -127,8 +134,9 @@ public class PaginaProduto implements Logavel{
 		return fretes;
 	}
 	
-	private void comprar() {
+	private void comprar(Produto produto, Map<String, BigDecimal> fretes, Usuario usuario) {
 		
+		linkPagCarrinho.efetuarCompra(produto, fretes, usuario);
 	}
 	
 	private void exibirFormasPgto(Produto produto) {

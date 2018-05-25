@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Compravel {
 
-	public void adiciona(ItemCarrinho item, int quantidade);
+	public void adiciona(ItemCarrinho item);
 	public boolean remove(ItemCarrinho item);
 	public double getPrecoTotal();
 	public int getTotalItens();

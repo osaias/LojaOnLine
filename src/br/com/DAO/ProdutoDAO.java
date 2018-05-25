@@ -10,7 +10,7 @@ import simulador.BancoDados.TabelaProdutos;
 
 public class ProdutoDAO {
 
-	public Produto buscar(Produto produto) {
+	public Produto consultar(Produto produto) {
 		
 		Collection<Produto> produtos = TabelaProdutos.getProdutos();
 		if(produtos.contains(produto)) {
@@ -26,7 +26,30 @@ public class ProdutoDAO {
 		return null;
 	}
 	
-	public int buscarQuantidade(Produto produto) {
+	public Produto pegarProduto(Produto produto) {
+		return this.consultar(produto);
+	}
+	
+	public List<Produto> pegarProdutos(Produto produto, int quantidade) {
+		
+		List<Produto> lista = new ArrayList<>();
+		Collection<Produto> produtos = TabelaProdutos.getProdutos();
+		
+		if (quantidade > consultarQuantidade(produto)) {
+			throw new IllegalArgumentException("Não existem produtos suficientes");
+		}
+		
+		for (Produto prod : produtos) {
+			
+			if (produto.getNome().equals(prod.getNome()) && lista.size() <= quantidade) {
+				lista.add(prod);
+			}
+		}
+		
+		return lista;
+	}
+	
+	public int consultarQuantidade(Produto produto) {
 		
 		int qtd = 0;
 		Collection<Produto> produtos = TabelaProdutos.getProdutos();
@@ -54,11 +77,11 @@ public class ProdutoDAO {
 	
 	public static void main(String[] args) {
 		
-		Produto produto = new Produto("Tv Sony", "40' Full HD Smart", "", 2000.00, 100.0, 10.0, 150.00, 3250.00);
+		Produto produto = new Produto("Tv Sony", "40' Full HD Smart", "Sony", 2000.00, 100.0, 10.0, 150.00, 3250.00);
 		produto.setId(1);
 		ProdutoDAO dao = new ProdutoDAO();
 		
-		System.out.println(dao.buscarQuantidade(produto));
-		System.out.println(dao.buscar(produto).getNome());
+		System.out.println(dao.consultarQuantidade(produto));
+		System.out.println(dao.consultar(produto).getNome());
 	}
 }

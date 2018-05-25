@@ -74,7 +74,7 @@ public class PaginaPrincipal implements Logavel{
 	
 	public Produto pesquisar(Produto produto) {
 
-		return produtoDao.buscar(produto);
+		return produtoDao.consultar(produto);
 	}
 	
 	private List<Produto> buscarListaProdutosPrincipal(){

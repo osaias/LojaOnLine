@@ -8,9 +8,8 @@ public class CarrinhoDeCompra implements Compravel{
 	private List<ItemCarrinho> itens = new ArrayList<>();
 
 	@Override
-	public void adiciona(ItemCarrinho item, int quantidade) {
+	public void adiciona(ItemCarrinho item) {
 
-		item.setQuantidade(quantidade);
 		this.itens.add(item);
 	}
 

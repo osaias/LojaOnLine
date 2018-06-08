@@ -7,11 +7,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 import Util.Console;
+import Util.Sessao;
 import br.com.DAO.ProdutoDAO;
 import br.com.cliente.Usuario;
 import br.com.compra.Produto;
 
-public class PaginaPrincipal implements Logavel{
+public class PaginaPrincipal{
 	
 	List<Produto> listaProdutosPrincipal = new ArrayList<>();
 	PaginaProduto linkPagProd = new PaginaProduto();
@@ -20,17 +21,22 @@ public class PaginaPrincipal implements Logavel{
 
 	public Produto listarProdutos() {
 		
+		Sessao.setAtributo("paginaAtual", "PaginaPrincipal");
+		
 		listaProdutosPrincipal = buscarListaProdutosPrincipal();
-
+		
+		System.out.println("=================================================================================");
+		System.out.println("                             PAGINA PRINCIPAL                                    ");
+		System.out.println("=================================================================================");
 		System.out.println(String.format("%1$-3s %2$-25s %3$-9s", "ID", "NOME", "VALOR"));
 		System.out.println("---------------------------------------------------------------------------------");
 		for (Produto p : listaProdutosPrincipal) {
 
 			System.out.println(String.format("%1$-3d %2$-25s %3$.2f", p.getId(), p.getNome().toUpperCase(), p.getPreco()));
 		}
-		System.out.println("---------------------------------------------------------------------------------");
+		System.out.println("=================================================================================");
 		Scanner entrada = new Scanner(System.in);
-		System.out.println("ID Produto: ");
+		System.out.print("ID Produto: ");
 		long id = Long.parseLong(entrada.nextLine());
 		
 		for (Produto p : listaProdutosPrincipal) {
@@ -40,25 +46,10 @@ public class PaginaPrincipal implements Logavel{
 			}
 		}
 		return null;
-
-	}
-	
-	@Override
-	public boolean logar() {
-		
-		return linkPagCadUsuario.logar();
-	}
-	
-	@Override
-	public Usuario cadastrarUsuario() {
-		
-		return linkPagCadUsuario.cadastrarUsuario();
 	}
 	
 	public void clicar(Produto produto) {
-		if(linkPagProd.exibirProduto(produto)) {
-			
-		}
+		linkPagProd.exibirProduto(produto);
 	}
 
 	public String cadastrarEmail() {
@@ -79,7 +70,6 @@ public class PaginaPrincipal implements Logavel{
 	
 	private List<Produto> buscarListaProdutosPrincipal(){
 
-		//mexer aqi
 		List<Produto> produtos = new ArrayList<>();
 		List<Produto> lista = produtoDao.getTodosProdutos();
 

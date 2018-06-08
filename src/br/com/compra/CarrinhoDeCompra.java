@@ -1,11 +1,13 @@
 package br.com.compra;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CarrinhoDeCompra implements Compravel{
 	
-	private List<ItemCarrinho> itens = new ArrayList<>();
+	private Set<ItemCarrinho> itens = new HashSet<>();
 
 	@Override
 	public void adiciona(ItemCarrinho item) {
@@ -28,13 +30,23 @@ public class CarrinhoDeCompra implements Compravel{
 
 		double total = 0;
 		for (ItemCarrinho item : itens) {
-			total += item.getValorTotal();
+			total += item.getValor();
 		}
 		return total;
 	}
 	
-	public List<ItemCarrinho> getItens(){
+	public Set<ItemCarrinho> getItens(){
 		return this.itens;
+	}
+	
+	public List<Produto> getProdutos(){
+		
+		List<Produto> lista = new ArrayList<>();
+		
+		for (ItemCarrinho produto : itens) {
+			lista.add(produto.getProduto());
+		}
+		return lista;
 	}
 
 	@Override

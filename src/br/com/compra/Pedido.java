@@ -10,54 +10,76 @@ import br.com.frete.Frete;
 
 public class Pedido {
 
-	private CarrinhoDeCompra carrinho = new CarrinhoDeCompra();
-	
-	private int numero = 0;
+	private int numero;
 	private double total;
 	private String formaPgto;
 	private boolean status;
 	private Endereco enderecoEntrega;
 	private Frete frete;
+	private Usuario usuario;
+	private List<Produto> produtos;
 	
-	
-	
-	public String efetuarPedido(Compravel carrinho ,Usuario usuario, 
-			Endereco entrega, TipoPgto pagamento) {
-		
-		if (!this.isUsuario(usuario)) {
-			return "USUARIO NÃO CADASTADO...\n Crie um usuário";
-		}
-		
-		if (usuario.getEndereco().equals(null)) {
-			return false;
-		}
-		
-		if (carrinho.getTotalItens() == 0) {
-			return "CARRINHO VAZIO...\n Adicione itens ao carrinho";
-		}
-		
-		List<ItemCarrinho> listaDeItens = new ArrayList<>();
-		listaDeItens = carrinho.getItens();
-		
-		return false;
-	}
-	
-	private boolean fecharPedido(Compravel carrinho ,Usuario usuario) {
-		
-		return false;
-	}
-	
-	private boolean isUsuario(Usuario usuario) {
-		
-		if (usuario.equals(null) && (!usuario.isLogado())) {
-			return false;
-		}
-		return true;
-	}
-	
-	private BigDecimal calcularFrete(Endereco entrega, Compravel carrinho) {
-		return null;
-		
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	public int getNumero() {
+		return numero;
+	}
+	
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	
+	public double getTotal() {
+		return total;
+	}
+	
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	
+	public String getFormaPgto() {
+		return formaPgto;
+	}
+	
+	public void setFormaPgto(String formaPgto) {
+		this.formaPgto = formaPgto;
+	}
+	
+	public boolean isStatus() {
+		return status;
+	}
+	
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
+	public Endereco getEnderecoEntrega() {
+		return enderecoEntrega;
+	}
+	
+	public void setEnderecoEntrega(Endereco enderecoEntrega) {
+		this.enderecoEntrega = enderecoEntrega;
+	}
+	
+	public Frete getFrete() {
+		return frete;
+	}
+	
+	public void setFrete(Frete frete) {
+		this.frete = frete;
+	}
 }

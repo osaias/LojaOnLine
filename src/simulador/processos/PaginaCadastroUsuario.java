@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import Util.Console;
+import Util.Sessao;
 import br.com.DAO.EnderecoDAO;
 import br.com.DAO.LoginDAO;
 import br.com.DAO.UsuarioDAO;
@@ -16,58 +17,62 @@ import simulador.BancoDados.TabelaLogin;
 
 public class PaginaCadastroUsuario {
 
-	public Usuario cadastrarUsuario() {
+	public boolean cadastrarUsuario() {
 
 		Usuario usuario = new Usuario();
 		Login login = new Login();
 		Endereco endereco = new Endereco();
+		PaginaLogin pagLogin = new PaginaLogin();
 		
 		Scanner entrada = new Scanner(System.in);
 
 		Console.limpatela();
-		System.out.println("----------------------------------------------------------");
-		System.out.println("----------------------DADOS PESSOAIS----------------------");
-		System.out.println("----------------------------------------------------------");
-		System.out.println("Digite seu nome: ");
+		System.out.println("=================================================================================");
+		System.out.println("                              PAGINA CADASTRO                                    ");
+		System.out.println("=================================================================================");
+		System.out.println("---------------------------------------------------------------------------------");
+		System.out.println("     DADOS PESSOAIS");
+		System.out.println("---------------------------------------------------------------------------------");
+		System.out.print("Digite seu nome: ");
 		usuario.setNome(entrada.nextLine());
-		System.out.println("Digite seu sobrenome: ");
+		System.out.print("Digite seu sobrenome: ");
 		usuario.setSobrenome(entrada.nextLine());
-		System.out.println("Digite seu cpf: ");
+		System.out.print("Digite seu cpf: ");
 		usuario.setCpf(entrada.nextLine());
-		System.out.println("Digite seu telefone: ");
+		System.out.print("Digite seu telefone: ");
 		usuario.setTelefone(Integer.parseInt(entrada.nextLine()));
-		System.out.println("Digite seu celular: ");
+		System.out.print("Digite seu celular: ");
 		usuario.setCelular(Integer.parseInt(entrada.nextLine()));
 
-		System.out.println("----------------------------------------------------------");
-		System.out.println("-------------------------ENDEREÇO-------------------------");
-		System.out.println("----------------------------------------------------------");
-		System.out.println("Logradouro: ");
+		System.out.println("--------------------------------------------------------------------------------");
+		System.out.println("     ENDEREÇO ");
+		System.out.println("--------------------------------------------------------------------------------");
+		System.out.print("Logradouro: ");
 		endereco.setLogradouro(entrada.nextLine());
-		System.out.println("Número: ");
+		System.out.print("Número: ");
 		endereco.setNumero(Integer.parseInt(entrada.nextLine()));
-		System.out.println("Cep: ");
+		System.out.print("Cep: ");
 		endereco.setCep(entrada.nextLine());
-		System.out.println("Bairro: ");
+		System.out.print("Bairro: ");
 		endereco.setBairro(entrada.nextLine());
-		System.out.println("Cidade: ");
+		System.out.print("Cidade: ");
 		endereco.setCidade(entrada.nextLine());
-		System.out.println("UF: ");
+		System.out.print("UF: ");
 		endereco.setUf(entrada.nextLine());
-		System.out.println("Nacionalidade: ");
+		System.out.print("Nacionalidade: ");
 		endereco.setNacionalidade(entrada.nextLine());
 		usuario.setEndereco(endereco);
 
-		System.out.println("----------------------------------------------------------");
-		System.out.println("-------------------------LOGIN----------------------------");
-		System.out.println("----------------------------------------------------------");
-		System.out.println("E-mail: ");
+		System.out.println("------------------------------------------------------------------------------");
+		System.out.println("     LOGIN ");
+		System.out.println("------------------------------------------------------------------------------");
+		System.out.print("E-mail: ");
 		login.setEmail(entrada.nextLine());
-		System.out.println("Senha: ");
+		System.out.print("Senha: ");
 		login.setSenha(entrada.nextLine());
 		usuario.setLogin(login);
 
-		if(verifica(usuario.getLogin())) {
+		if(pagLogin.verifica(usuario.getLogin())) {
 			usuario.setLogado(true);
 		};
 		
@@ -75,65 +80,11 @@ public class PaginaCadastroUsuario {
 		new LoginDAO().cadastrar(usuario);
 		new EnderecoDAO().cadastrar(usuario);
 		
+		Sessao.setAtributo("usuario", usuario);
+		
 		entrada.close();
 
-		return usuario;
+		return true;
 	}
 
-	private boolean verifica(Login dadosLogin) {
-
-		if(dadosLogin.getEmail().equals(null)) {
-			throw new IllegalArgumentException("O email está vazio");
-		}
-
-		if(dadosLogin.getSenha().equals(null)) {
-			throw new IllegalArgumentException("A senha está vazia");
-		}
-
-		if(!dadosLogin.getEmail().equals("") 
-				&& !dadosLogin.getSenha().equals("")){
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean logar() {
-		Scanner entrada = new Scanner(System.in);
-		
-		Console.limpatela();
-		System.out.println("Digite seu email: ");
-		String email = entrada.nextLine();
-		System.out.println("Digite sua senha: ");
-		String senha = entrada.nextLine();
-		
-		//ir no banco de dados
-		List<Usuario> usuarios = new UsuarioDAO().getTodos();
-		LoginDAO loginDAO = new LoginDAO();
-		
-		for (Usuario usuario : usuarios) {
-			
-			Login login = loginDAO.consultar(usuario);
-			
-			if(login.getEmail().equals(email) && login.getSenha().equals(senha)) {
-				
-				return true;
-			} else if (!login.getEmail().equals(email)) {
-				
-				throw new IllegalArgumentException("E-mail Inválido");
-			} else if (!login.getSenha().equals(senha)) {
-				
-				throw new IllegalArgumentException("Senha Inválida");
-			}
-		}
-
-		return false;
-	}
-	
-	
-	public static void main(String[] args) {
-		 
-		PaginaCadastroUsuario p = new PaginaCadastroUsuario();
-		
-		System.out.println(p.logar());
-	}
 }

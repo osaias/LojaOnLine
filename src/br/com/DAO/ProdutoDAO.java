@@ -41,7 +41,7 @@ public class ProdutoDAO {
 		
 		for (Produto prod : produtos) {
 			
-			if (produto.getNome().equals(prod.getNome()) && lista.size() <= quantidade) {
+			if (produto.getNome().equals(prod.getNome()) && lista.size() < quantidade) {
 				lista.add(prod);
 			}
 		}
@@ -83,5 +83,6 @@ public class ProdutoDAO {
 		
 		System.out.println(dao.consultarQuantidade(produto));
 		System.out.println(dao.consultar(produto).getNome());
+		dao.pegarProdutos(produto,5);
 	}
 }

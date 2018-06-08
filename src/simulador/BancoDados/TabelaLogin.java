@@ -17,12 +17,12 @@ public class TabelaLogin {
 		List<Usuario> usuarios = new ArrayList<>();
 		usuarios.addAll(TabelaUsuarios.getUsuarios().values());
 		
-		geraLoginDoUsuario(new Login("jose.silveira@alura.com.br","123456"), usuarios.get(1));
-		geraLoginDoUsuario(new Login("matias.turini@alura.com.br","6521458"), usuarios.get(2));
-		geraLoginDoUsuario(new Login("admin@gmail.com","123"), usuarios.get(0));
-		geraLoginDoUsuario(new Login("rose@gmail.com","128593"), usuarios.get(3));
-		geraLoginDoUsuario(new Login("maria@gmail.com","125473"), usuarios.get(4));
-		geraLoginDoUsuario(new Login("natan@gmail.com","125693"), usuarios.get(5));
+		geraLoginDoUsuario(new Login("jose.silveira@alura.com.br","123456"), usuarios.get(3));
+		geraLoginDoUsuario(new Login("matias.turini@alura.com.br","6521458"), usuarios.get(0));
+		geraLoginDoUsuario(new Login("admin@gmail.com","123"), usuarios.get(2));
+		geraLoginDoUsuario(new Login("rose@gmail.com","128593"), usuarios.get(1));
+		geraLoginDoUsuario(new Login("maria@gmail.com","125473"), usuarios.get(5));
+		geraLoginDoUsuario(new Login("natan@gmail.com","125693"), usuarios.get(4));
 
 	}
 	

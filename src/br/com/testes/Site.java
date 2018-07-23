@@ -11,6 +11,7 @@ import br.com.compra.Produto;
 import simulador.processos.PaginaCadastroUsuario;
 import simulador.processos.PaginaCarrinho;
 import simulador.processos.PaginaLogin;
+import simulador.processos.PaginaPagamento;
 import simulador.processos.PaginaPedido;
 import simulador.processos.PaginaPrincipal;
 import simulador.processos.PaginaProduto;
@@ -27,6 +28,7 @@ public class Site {
 		PaginaCarrinho pagCarr = new PaginaCarrinho();
 		PaginaLogin pagLogin = new PaginaLogin();
 		PaginaPedido pagPed = new PaginaPedido();
+		PaginaPagamento pagPag = new PaginaPagamento();
 		
 		do {
 			
@@ -146,7 +148,8 @@ public class Site {
 					
 				case 10:
 					//boleto
-					
+					pagPed.gerarPedido();
+					pagPag.gerarBoleto();
 					break;
 					
 				case 11:

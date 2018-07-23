@@ -14,6 +14,7 @@ import java.util.Set;
 import Util.GestorDeServicos;
 import Util.Console;
 import Util.Servico;
+import Util.ServicoTransporte;
 import Util.Sessao;
 import br.com.DAO.EstoqueDAO;
 import br.com.DAO.TransportadoraDAO;
@@ -74,8 +75,10 @@ public class PaginaProduto{
 		frete.setCepOrigem(new EstoqueDAO().pegarEndereco().getCep());
 		frete.setCepDestino(cep);
 		
+		Sessao.setAtributo("frete", frete);
+		
 		List<Transportadora> transportadoras = new TransportadoraDAO().getTransportadorasConveniadas();
-		for (Servico transportadora : transportadoras) {
+		for (ServicoTransporte transportadora : transportadoras) {
 			
 			if(gestor.conectar(transportadora)) {
 				frete.setTransportador(transportadora);

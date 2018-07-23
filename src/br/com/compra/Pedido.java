@@ -7,18 +7,30 @@ import java.util.List;
 import br.com.cliente.Endereco;
 import br.com.cliente.Usuario;
 import br.com.frete.Frete;
+import br.com.loja.Loja;
+import br.com.pagamento.FormaPgto;
 
 public class Pedido {
 
 	private int numero;
 	private double total;
-	private String formaPgto;
+	private FormaPgto formaPgto;
 	private boolean status;
 	private Endereco enderecoEntrega;
 	private Frete frete;
 	private Usuario usuario;
 	private List<Produto> produtos;
+	private Loja loja;
 	
+	
+	public Loja getLoja() {
+		return loja;
+	}
+
+	public void setLoja(Loja loja) {
+		this.loja = loja;
+	}
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
@@ -51,11 +63,11 @@ public class Pedido {
 		this.total = total;
 	}
 	
-	public String getFormaPgto() {
+	public FormaPgto getFormaPgto() {
 		return formaPgto;
 	}
 	
-	public void setFormaPgto(String formaPgto) {
+	public void setFormaPgto(FormaPgto formaPgto) {
 		this.formaPgto = formaPgto;
 	}
 	

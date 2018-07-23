@@ -10,7 +10,9 @@ import java.util.Set;
 import Util.Console;
 import Util.GestorDeServicos;
 import Util.Servico;
+import Util.ServicoTransporte;
 import Util.Sessao;
+import br.com.DAO.EnderecoDAO;
 import br.com.DAO.EstoqueDAO;
 import br.com.DAO.TransportadoraDAO;
 import br.com.cliente.Usuario;
@@ -18,6 +20,7 @@ import br.com.compra.CarrinhoDeCompra;
 import br.com.compra.ItemCarrinho;
 import br.com.compra.Pedido;
 import br.com.frete.Frete;
+import br.com.loja.Loja;
 import br.com.transportadora.Transportadora;
 
 public class PaginaPedido {
@@ -43,20 +46,38 @@ public class PaginaPedido {
 		System.out.println("---------------------------------------------------------------------------------");
 		exibirFormaPgto();
 		System.out.println("=================================================================================");
-		System.out.println("Escolha o frete: ");
+		System.out.print("Escolha o frete: ");
 		String frete = sc.nextLine();
-		Sessao.setAtributo("fretePedido", frete);
+		Sessao.setAtributo("fretePedido", frete.toUpperCase());
 		System.out.println("Escolha a forma pagamento: ");
-		int opcao = Integer.parseInt(sc.nextLine());
-		Sessao.setAtributo("formasPgto", opcao);
 	}
 	
-	public Pedido fecharPedido() {
+	public void gerarPedido() {
 		
-		//implementar
-		return pedido;
+		CarrinhoDeCompra carrinho = (CarrinhoDeCompra) Sessao.getAtributo("carrinho");
+		List<ItemCarrinho> produtos = (List<ItemCarrinho>) Sessao.getAtributo("listaDeProdutos");
+		Usuario usuario = (Usuario) Sessao.getAtributo("usuario");
 		
+		Frete frete = (Frete) Sessao.getAtributo("frete");
+		Map<String, BigDecimal> fretes = (Map<String, BigDecimal>) Sessao.getAtributo("fretes");
+		String freteEscolhido = (String) Sessao.getAtributo("fretePedido");
+		
+		frete.setServico(freteEscolhido);
+		frete.setValorFrete(fretes.get(freteEscolhido));
+		
+		pedido.setEnderecoEntrega(usuario.getEndereco());
+		//pedido.setFormaPgto(formaPgto);
+		pedido.setFrete(frete);
+		pedido.setLoja(new Loja());
+		//pedido.setNumero(numero);
+		pedido.setProdutos(carrinho.getProdutos());
+		pedido.setTotal(carrinho.getPrecoTotal());
+		pedido.setUsuario(usuario);
+		
+		Sessao.setAtributo("pedido", pedido);
+	
 	}
+	
 	private void exibirCarrinho() {
 		
 		List<ItemCarrinho> produtos = (List<ItemCarrinho>) Sessao.getAtributo("listaDeProdutos");
@@ -70,13 +91,14 @@ public class PaginaPedido {
 	
 	private void exibirFretes() {
 
-		System.out.println("Fretes: ");
+		System.out.println("\nFRETES: ");
 		
 		Map<String, BigDecimal> fretes = (Map<String, BigDecimal>) Sessao.getAtributo("fretes");
 		
 		if (fretes == null) {
 		
-			Sessao.setAtributo("fretes", calcularFrete());
+			fretes = calcularFrete();
+			Sessao.setAtributo("fretes", fretes);
 		}
 		
 		Set<String> chaves = fretes.keySet();
@@ -98,16 +120,20 @@ public class PaginaPedido {
 		
 		Usuario usuario = (Usuario) Sessao.getAtributo("usuario");
 		
-		System.out.println("ENDEREÇO DE ENTREGA: ");
-		System.out.println(usuario.getNome().toUpperCase());
-		System.out.println(usuario.getEndereco().getCidade());
+		usuario.setEndereco(new EnderecoDAO().consultar(usuario));
+		
+		Sessao.setAtributo("usuario", usuario);
+		
+		System.out.println("\nENDEREÇO DE ENTREGA: ");
+		System.out.println("            " + usuario.getNome().toUpperCase());
+		System.out.print("            " + usuario.getEndereco().getCidade() + " - ");
 		System.out.println(usuario.getEndereco().getUf());
-		System.out.println(usuario.getEndereco().getCep());
+		System.out.println("            " + usuario.getEndereco().getCep());
 	}
 	
 	private void exibirFormaPgto() {
 		
-		System.out.println("FORMAS DE PAGAMENTO: ");
+		System.out.println("FORMAS DE PAGAMENTO: \n");
 		System.out.println("          10 - Boleto            11 - Crédito             12 - Débito            ");
 	}
 	
@@ -139,8 +165,10 @@ public class PaginaPedido {
 		frete.setCepOrigem(new EstoqueDAO().pegarEndereco().getCep());
 		frete.setCepDestino(usuario.getEndereco().getCep());
 		
+		Sessao.setAtributo("frete", frete);
+		
 		List<Transportadora> transportadoras = new TransportadoraDAO().getTransportadorasConveniadas();
-		for (Servico transportadora : transportadoras) {
+		for (ServicoTransporte transportadora : transportadoras) {
 
 			if(gestor.conectar(transportadora)) {
 				frete.setTransportador(transportadora);

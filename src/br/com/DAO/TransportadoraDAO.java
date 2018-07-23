@@ -9,8 +9,6 @@ import simulador.BancoDados.TabelaTransportadoras;
 
 public class TransportadoraDAO {
 
-
-
 	public List<Transportadora> getTransportadorasConveniadas() {
 		
 		Iterator<Transportadora> iterator = TabelaTransportadoras.getUsuarios().iterator();

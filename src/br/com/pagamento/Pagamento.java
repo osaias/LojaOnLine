@@ -11,7 +11,7 @@ public abstract class Pagamento implements pagavel {
 	protected Usuario usuario;
 	protected Pedido pedido;
 	protected BigDecimal valor;
-	protected boolean status;
+	protected boolean pago;
 	protected FormaPgto formaPgto;
 	
 	
@@ -39,11 +39,11 @@ public abstract class Pagamento implements pagavel {
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
-	public boolean isStatus() {
-		return status;
+	public boolean isPago() {
+		return pago;
 	}
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setPago(boolean status) {
+		this.pago = status;
 	}
 	public FormaPgto getFormaPgto() {
 		return formaPgto;

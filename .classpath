@@ -13,5 +13,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Java/JARS/jettison-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Java/JARS/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Java/JARS/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="C:/Java/JARS/xstream-1.4.10.jar" sourcepath="C:/Java/JARS/xstream-1.4.10"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

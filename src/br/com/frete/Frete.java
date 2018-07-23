@@ -1,9 +1,11 @@
 package br.com.frete;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import Util.Servico;
+import Util.ServicoTransporte;
 import br.com.compra.Produto;
 import br.com.transportadora.Transportadora;
 
@@ -13,8 +15,8 @@ public class Frete {
 	private String cepOrigem;
 	private String cepDestino;
 	private double valorPeso;
-	private double valorFrete;
-	private Servico transportador;
+	private BigDecimal valorFrete;
+	private ServicoTransporte transportador;
 	private List<Produto> produtos;
 	private String servico;
 	
@@ -36,16 +38,16 @@ public class Frete {
 	public void setValorPeso(double valorPeso) {
 		this.valorPeso = valorPeso;
 	}
-	public double getValorFrete() {
+	public BigDecimal getValorFrete() {
 		return valorFrete;
 	}
-	public void setValorFrete(double valorFrete) {
+	public void setValorFrete(BigDecimal valorFrete) {
 		this.valorFrete = valorFrete;
 	}
-	public Servico getTransportador() {
+	public ServicoTransporte getTransportador() {
 		return transportador;
 	}
-	public void setTransportador(Servico transportadora) {
+	public void setTransportador(ServicoTransporte transportadora) {
 		this.transportador = transportadora;
 	}
 	public List<Produto> getProdutos() {

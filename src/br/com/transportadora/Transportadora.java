@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import Util.Servico;
+import Util.ServicoTransporte;
 import br.com.frete.Estados;
 import br.com.frete.Regioes;
 import simulador.servicos.externos.ServicosCorreio.Servicos;
 
-public abstract class Transportadora implements Servico{
+public abstract class Transportadora implements ServicoTransporte{
 
 	private Long id;
 	protected String nome;

@@ -2,5 +2,5 @@ package br.com.pagamento;
 
 public enum FormaPgto {
 
-	AVISTA, DEBITO, CREDITO
+	AVISTA, DEBITO, CREDITO, BOLETO
 }

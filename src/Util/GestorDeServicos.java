@@ -77,51 +77,23 @@ public class GestorDeServicos {
 		
 		Agencia[] agencias = TipoConvenio.BOLETO.getAgencias();
 		
-		Servico instanciaServico = agencias[0].getInstanciaServico();
-		
+		Object instanciaServico = agencias[0].getInstanciaServico();
+				
 		if (instanciaServico.equals(null)) {
 			throw new IllegalArgumentException("Não conseguiu a instancia do servico");
 		}
 		
-		Agencia agencia = null;
-		try {
-			agencia = (Agencia) instanciaServico.getClass().newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("Não consegui instancia" + e);
-		} catch (IllegalAccessException e) {
-			System.out.println("Não consegui o cast" + e);
-		}
-		/*
-		 * Neste caso, o XML funciona como um protocolo de comunicação
-		 * com o servico bancario correspondente.
-		 */
-		String pedidoXML = gerarXML(pedido);
+		Agencia agencia = agencias[0];
 		
-		String boletoXML = agencia.getBoleto(pedidoXML);
-		
-		Boleto boleto = (Boleto) transformXMLemObjeto(boletoXML);
-		System.out.println();
+		Boleto boleto = agencia.getBoleto(pedido);
+
 //		PedidoDAO pedidoDAO = new PedidoDAO();
 //		
 //		pedidoDAO.put();
 		
 	}
 	
-	private Object transformXMLemObjeto(String boletoXML) {
-
-		XStream xs = new XStream();
-		return xs.fromXML(boletoXML);
-	}
-
-
-
-	private String gerarXML(Object pedido) {
-
-		XStream xs = new XStream();
-		
-		xs.alias("pedido", Pedido.class);
-		return xs.toXML(pedido);
-	}
+	
 
 
 

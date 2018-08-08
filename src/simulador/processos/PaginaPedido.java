@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import br.com.compra.ItemCarrinho;
 import br.com.compra.Pedido;
 import br.com.frete.Frete;
 import br.com.loja.Loja;
+import br.com.pagamento.FormaPgto;
 import br.com.transportadora.Transportadora;
 
 public class PaginaPedido {
@@ -46,38 +48,75 @@ public class PaginaPedido {
 		System.out.println("---------------------------------------------------------------------------------");
 		exibirFormaPgto();
 		System.out.println("=================================================================================");
-		System.out.print("Escolha o frete: ");
-		String frete = sc.nextLine();
-		Sessao.setAtributo("fretePedido", frete.toUpperCase());
+		escolherFrete(sc);
 		System.out.println("Escolha a forma pagamento: ");
+		int opcaoPgto = Integer.valueOf(sc.nextLine());
+
+		switch (opcaoPgto) {
+		case 10:
+			Sessao.setAtributo("formaPgto", FormaPgto.BOLETO);
+			break;
+		case 11:
+			Sessao.setAtributo("formaPgto", FormaPgto.CREDITO);
+			break;
+		case 12:
+			Sessao.setAtributo("formaPgto", FormaPgto.DEBITO);
+			break;
+		}
+		
+		gerarPedido();
+	}
+
+	private void escolherFrete(Scanner sc) {
+		System.out.print("Escolha o frete: ");
+		String servicoEscolhido = sc.nextLine();
+		
+		Frete fretePesquisado = (Frete) Sessao.getAtributo("frete");
+		Map<String, BigDecimal> fretesTransportadoras = (Map<String, BigDecimal>) Sessao.getAtributo("fretes");
+		
+		Frete fretePedido = new Frete();
+		
+		fretePedido.setCepOrigem(fretePesquisado.getCepOrigem());
+		fretePedido.setCepDestino(fretePesquisado.getCepDestino());
+		fretePedido.setServico(servicoEscolhido.toUpperCase());
+		fretePedido.setTransportador(fretePesquisado.getTransportador());
+		fretePedido.setValorFrete(fretesTransportadoras.get(servicoEscolhido.toUpperCase()));
+		fretePedido.setPeso(fretePesquisado.getPeso());
+		
+		Sessao.setAtributo("fretePedido", fretePedido);
 	}
 	
 	public void gerarPedido() {
-		
+		//Loja loja = new Loja();
 		CarrinhoDeCompra carrinho = (CarrinhoDeCompra) Sessao.getAtributo("carrinho");
 		List<ItemCarrinho> produtos = (List<ItemCarrinho>) Sessao.getAtributo("listaDeProdutos");
 		Usuario usuario = (Usuario) Sessao.getAtributo("usuario");
+
+		Frete freteEscolhido = (Frete) Sessao.getAtributo("fretePedido");
 		
-		Frete frete = (Frete) Sessao.getAtributo("frete");
-		Map<String, BigDecimal> fretes = (Map<String, BigDecimal>) Sessao.getAtributo("fretes");
-		String freteEscolhido = (String) Sessao.getAtributo("fretePedido");
+		FormaPgto formaPgto = (FormaPgto) Sessao.getAtributo("formaPgto");
 		
-		frete.setServico(freteEscolhido);
-		frete.setValorFrete(fretes.get(freteEscolhido));
-		
+		pedido.setNumero(new Random().nextInt(999999999));
 		pedido.setEnderecoEntrega(usuario.getEndereco());
-		//pedido.setFormaPgto(formaPgto);
-		pedido.setFrete(frete);
+		pedido.setFormaPgto(formaPgto);
+		pedido.setFrete(freteEscolhido);
 		pedido.setLoja(new Loja());
-		//pedido.setNumero(numero);
 		pedido.setProdutos(carrinho.getProdutos());
 		pedido.setTotal(carrinho.getPrecoTotal());
 		pedido.setUsuario(usuario);
 		
 		Sessao.setAtributo("pedido", pedido);
 	
+		confirmarPedido();
 	}
 	
+	private void confirmarPedido() {
+
+		System.out.println("CONFIRMAR PEDIDO: \n");
+		System.out.println("          10 - Confirmar            11 - Cancelar ");
+		
+	}
+
 	private void exibirCarrinho() {
 		
 		List<ItemCarrinho> produtos = (List<ItemCarrinho>) Sessao.getAtributo("listaDeProdutos");

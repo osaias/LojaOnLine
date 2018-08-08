@@ -1,8 +1,10 @@
 package Util;
 
+import Boleto.Boleto;
+import br.com.compra.Pedido;
 
 public interface ServicoBancario extends Servico {
 
-	<T> T getBoleto(String pedido);
+	Boleto getBoleto(Pedido pedido);
 
 }

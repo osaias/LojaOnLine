@@ -14,7 +14,7 @@ public class Frete {
 	
 	private String cepOrigem;
 	private String cepDestino;
-	private double valorPeso;
+	private double peso;
 	private BigDecimal valorFrete;
 	private ServicoTransporte transportador;
 	private List<Produto> produtos;
@@ -32,11 +32,17 @@ public class Frete {
 	public void setCepDestino(String cepDestino) {
 		this.cepDestino = cepDestino;
 	}
-	public double getValorPeso() {
-		return valorPeso;
+	public double getPeso() {
+		
+		if (!this.produtos.isEmpty()) {
+			for (Produto produto : produtos) {
+				this.peso += produto.getPeso();
+			}
+		}
+		return peso;
 	}
-	public void setValorPeso(double valorPeso) {
-		this.valorPeso = valorPeso;
+	public void setPeso(double peso) {
+		this.peso = peso;
 	}
 	public BigDecimal getValorFrete() {
 		return valorFrete;

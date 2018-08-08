@@ -22,9 +22,9 @@ public class PaginaPagamento {
 		Usuario usuario = (Usuario) Sessao.getAtributo("usuario");
 		Pedido pedido = (Pedido) Sessao.getAtributo("pedido");
 		
-		pedido.setUsuario(usuario);
-		pedido.setLoja(new Loja());
-		pedido.setFormaPgto(FormaPgto.BOLETO);
+		/*pedido.setUsuario(usuario);
+		pedido.setLoja(new Loja());*/
+		//pedido.setFormaPgto(FormaPgto.BOLETO);
 		
 		List<Agencia> bancosConveniados = new BancoDAO().getBancosConveniadas();
 		

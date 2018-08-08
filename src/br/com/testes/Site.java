@@ -147,18 +147,11 @@ public class Site {
 					break;
 					
 				case 10:
-					//boleto
-					pagPed.gerarPedido();
 					pagPag.gerarBoleto();
 					break;
 					
 				case 11:
-					//credito
-					
-					break;
-					
-				case 12:
-					//debito
+					//cancelar pedido
 					
 					break;
 					

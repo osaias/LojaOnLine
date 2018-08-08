@@ -2,6 +2,9 @@ package br.com.BancoFinanceira;
 
 import java.util.Arrays;
 
+import com.thoughtworks.xstream.XStream;
+
+import Boleto.Boleto;
 import br.com.cliente.Endereco;
 import br.com.compra.Pedido;
 import br.com.loja.Loja;
@@ -21,9 +24,10 @@ public class BancoDoBrasil extends Agencia{
 	}
 	
 	private void gerarConveniosDaLoja() {
-		Convenio boleto = new Convenio(111256, "Convenio Brasil Boleto", new Loja(), TipoConvenio.BOLETO, this, new Conta(10181, 8, Loja.getNome()));
-		Convenio credito = new Convenio(111257, "Convenio Brasil Credito", new Loja(), TipoConvenio.CARTAOCREDITO, this, new Conta(10182, 7, Loja.getNome()));
-		Convenio debito = new Convenio(111258, "Convenio Brasil Debito", new Loja(), TipoConvenio.DEBITO, this, new Conta(10184, 0, Loja.getNome()));
+		Loja loja = new Loja();
+		Convenio boleto = new Convenio(111256, "Convenio Brasil Boleto", loja, TipoConvenio.BOLETO, this, new Conta(10181, 8, loja.getNome()));
+		Convenio credito = new Convenio(111257, "Convenio Brasil Credito", loja, TipoConvenio.CARTAOCREDITO, this, new Conta(10182, 7, loja.getNome()));
+		Convenio debito = new Convenio(111258, "Convenio Brasil Debito", loja, TipoConvenio.DEBITO, this, new Conta(10184, 0, loja.getNome()));
 		this.setConvenios(Arrays.asList(boleto, credito, debito));
 	}
 	
@@ -35,10 +39,17 @@ public class BancoDoBrasil extends Agencia{
 	}
 
 	@Override
-	public <T> T getBoleto(String pedido) {
+	public Boleto getBoleto(Pedido pedido) {
 
-		Object boleto = new ServicosBcoBrasil().gerarBoleto(pedido);
-		return (T) boleto;
+		XStream xs = new XStream();
+		xs.alias("pedido", Pedido.class);
+		String pedidoXml = xs.toXML(pedido);
+		
+		String boletoXml = new ServicosBcoBrasil().gerarBoleto(pedidoXml);
+		
+		Boleto boleto = (Boleto) xs.fromXML(boletoXml);
+		
+		return boleto;
 	}
 
 

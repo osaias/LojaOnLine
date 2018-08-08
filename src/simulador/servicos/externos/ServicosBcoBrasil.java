@@ -7,15 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.thoughtworks.xstream.XStream;
+
 import br.com.BancoFinanceira.Agencia;
 import br.com.cliente.Endereco;
+import br.com.compra.Pedido;
 
 public class ServicosBcoBrasil {
 
-	// o pedido tinha que ser um json
-	public Boleto gerarBoleto(String pedido) {
+	public String gerarBoleto(String pedido) {
 
-		Object pedido = pedido.get("pedido");
+		//pode ser usado qualquer biblioteca Stream, SAX, Java
+		XStream xs = new XStream();
+		xs.alias("pedido", Pedido.class);
+		String pedidoXml = xs.toXML(pedido);
+		
 		//Quem emite o boleto
 		Beneficiario beneficiario = new Beneficiario();
 

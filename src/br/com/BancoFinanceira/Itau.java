@@ -2,7 +2,9 @@ package br.com.BancoFinanceira;
 
 import java.util.Arrays;
 
+import Boleto.Boleto;
 import br.com.cliente.Endereco;
+import br.com.compra.Pedido;
 import br.com.loja.Loja;
 
 public class Itau extends Agencia{
@@ -18,8 +20,9 @@ public class Itau extends Agencia{
 	}
 
 	private void gerarConveniosDaLoja() {
-		Convenio credito = new Convenio(111257, "Convenio Itau Credito", new Loja(), TipoConvenio.CARTAOCREDITO, this, new Conta(2182, 7, Loja.getNome()));
-		Convenio debito = new Convenio(111258, "Convenio Itau Debito", new Loja(), TipoConvenio.DEBITO, this, new Conta(2184, 0, Loja.getNome()));
+		Loja loja = new Loja();
+		Convenio credito = new Convenio(111257, "Convenio Itau Credito", loja, TipoConvenio.CARTAOCREDITO, this, new Conta(2182, 7, loja.getNome()));
+		Convenio debito = new Convenio(111258, "Convenio Itau Debito", loja, TipoConvenio.DEBITO, this, new Conta(2184, 0, loja.getNome()));
 		this.setConvenios(Arrays.asList(credito, debito));
 	}
 	
@@ -31,7 +34,7 @@ public class Itau extends Agencia{
 	}
 
 	@Override
-	public <T> T getBoleto(String pedido) {
+	public Boleto getBoleto(Pedido pedido) {
 		// TODO Auto-generated method stub
 		return null;
 	}

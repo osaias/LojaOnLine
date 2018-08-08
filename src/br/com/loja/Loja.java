@@ -4,25 +4,25 @@ import br.com.cliente.Endereco;
 
 public class Loja {
 
-	private static String nome;
-	private static int numero;
-	private static Endereco endereco;
+	private String nome;
+	private int numero;
+	private Endereco endereco;
 	
-	static {
+	public Loja() {
 		numero = 11100212;
-		nome = "Loja Online";
+		nome = "Loja Online Inc.";
 		endereco = new Endereco("07600-100", "Mairiporã", "SP", "Brasil");
 	}
 	
-	public static int getNumero() {
+	public int getNumero() {
 		return numero;
 	}
 	
-	public static String getNome() {
+	public String getNome() {
 		return nome;
 	}
 	
-	public static Endereco getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 		
 	}

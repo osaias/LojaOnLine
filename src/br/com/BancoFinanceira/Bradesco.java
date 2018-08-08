@@ -2,7 +2,9 @@ package br.com.BancoFinanceira;
 
 import java.util.Arrays;
 
+import Boleto.Boleto;
 import br.com.cliente.Endereco;
+import br.com.compra.Pedido;
 import br.com.loja.Loja;
 
 public class Bradesco extends Agencia{
@@ -18,13 +20,14 @@ public class Bradesco extends Agencia{
 	}
 
 	private void gerarConveniosDaLoja() {
-		Convenio credito = new Convenio(111257, "Convenio Bradesco Credito", new Loja(), TipoConvenio.CARTAOCREDITO, this, new Conta(101182, 7, Loja.getNome()));
-		Convenio debito = new Convenio(111258, "Convenio Bradesco Debito", new Loja(), TipoConvenio.DEBITO, this, new Conta(101184, 0, Loja.getNome()));
+		Loja loja = new Loja();
+		Convenio credito = new Convenio(111257, "Convenio Bradesco Credito", loja, TipoConvenio.CARTAOCREDITO, this, new Conta(101182, 7, loja.getNome()));
+		Convenio debito = new Convenio(111258, "Convenio Bradesco Debito", loja, TipoConvenio.DEBITO, this, new Conta(101184, 0, loja.getNome()));
 		this.setConvenios(Arrays.asList(credito, debito));
 	}
 
 	@Override
-	public <T> T getBoleto(String pedido) {
+	public Boleto getBoleto(Pedido pedido) {
 		// TODO Auto-generated method stub
 		return null;
 	}

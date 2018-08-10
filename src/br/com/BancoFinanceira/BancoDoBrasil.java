@@ -53,9 +53,9 @@ public class BancoDoBrasil extends Agencia{
 		xs.aliasType("", Transportadora.class);
 		xs.aliasField("transportadora", Frete.class, "transportador");
 		xs.addDefaultImplementation(Frete.class,ServicoTransporte.class);
-
 		xs.setMode(XStream.NO_REFERENCES);
 		xs.registerLocalConverter(Frete.class, "transportador", new nomeTranspConverter());
+		
 		String pedidoXml = xs.toXML(pedido);
 		
 		String boletoXml = new ServicosBcoBrasil().gerarBoleto(pedidoXml);

@@ -24,6 +24,7 @@ import br.com.frete.Frete;
 import br.com.loja.Loja;
 import br.com.pagamento.FormaPgto;
 import br.com.transportadora.Transportadora;
+import simulador.servicos.externos.ServicosCorreio.Servicos;
 
 public class PaginaPedido {
 
@@ -79,9 +80,17 @@ public class PaginaPedido {
 		fretePedido.setCepOrigem(fretePesquisado.getCepOrigem());
 		fretePedido.setCepDestino(fretePesquisado.getCepDestino());
 		fretePedido.setServico(servicoEscolhido.toUpperCase());
-		fretePedido.setTransportador(fretePesquisado.getTransportador());
 		fretePedido.setValorFrete(fretesTransportadoras.get(servicoEscolhido.toUpperCase()));
 		fretePedido.setPeso(fretePesquisado.getPeso());
+
+		List<Transportadora> transportadorasComFrete = gestor.getTransportadorasComFrete();
+		for (Transportadora transportadora : transportadorasComFrete) {
+			Set<String> nomesServicos = transportadora.getFretes().keySet();
+			if (nomesServicos.contains(servicoEscolhido.toUpperCase())){
+				fretePedido.setTransportador(transportadora);
+				break;
+			}
+		}
 		
 		Sessao.setAtributo("fretePedido", fretePedido);
 	}
@@ -93,7 +102,7 @@ public class PaginaPedido {
 		Usuario usuario = (Usuario) Sessao.getAtributo("usuario");
 
 		Frete freteEscolhido = (Frete) Sessao.getAtributo("fretePedido");
-		
+
 		FormaPgto formaPgto = (FormaPgto) Sessao.getAtributo("formaPgto");
 		
 		pedido.setNumero(new Random().nextInt(999999999));

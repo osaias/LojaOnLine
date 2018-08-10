@@ -31,6 +31,7 @@ public class GestorDeServicos {
 	private List<Servico> agencias = new ArrayList<Servico>();
 	private List<Servico> fornecedores = new ArrayList<Servico>();
 	private List<Servico> financeiras = new ArrayList<Servico>();
+	private List<Transportadora> transportadorasComFrete = new ArrayList<>();
 	
 	public GestorDeServicos() {
 		
@@ -61,12 +62,17 @@ public class GestorDeServicos {
 	}
 
 	public Map<String, BigDecimal> getFreteTranportador(Frete frete) {
-		
-		ServicoTransporte transportador = frete.getTransportador();
+		//cast da interface para o Objeto
+		Transportadora transportador = (Transportadora) frete.getTransportador();
 		transportador.calcularFrete(frete);
 		//this.transportadores.add(transportador);
+		Map<String, BigDecimal> fretesTransportadora = ((Transportadora) transportador).getFretes();
 		
-		return ((Transportadora) transportador).getFretes();
+		if (fretesTransportadora != null) {
+			transportadorasComFrete.add(transportador);
+		}
+		
+		return fretesTransportadora;
 	}
 	
 	public void gerarBoleto(Pedido pedido) {
@@ -93,7 +99,9 @@ public class GestorDeServicos {
 		
 	}
 	
-	
+	public List<Transportadora> getTransportadorasComFrete() {
+		return transportadorasComFrete;
+	}
 
 
 
@@ -127,31 +135,6 @@ public class GestorDeServicos {
 		for (Agencia agencia : bancosConveniadas) {
 			agencias.add(agencia);
 		}
-	}
-	
-	
-	public static void main(String[] args) {
-		GestorDeServicos g = new GestorDeServicos();
-		/*Servico s = new CorreiosTransportes(null);
-		g.conectar(s);
-		Frete f = new Frete();
-		f.setTransportador(new CorreiosTransportes(null));
-		f.setCepDestino("08577-520");
-		f.setCepOrigem("08577-500");
-		f.setProdutos(Arrays.asList(new Produto("Tv Sony","","", 2000.00, 100.0, 10.0, 150.00, 3250.00)));
-		g.getFreteTranportador(f);*/
-		
-		/*Pedido ped = new Pedido();
-		
-		ped.setEnderecoEntrega(enderecoEntrega);
-		ped.setFormaPgto(formaPgto);
-		ped.setFrete(frete);
-		ped.setLoja(loja);
-		ped.setNumero(numero);
-		ped.setProdutos(produtos);
-		ped.setTotal(total);
-		ped.setUsuario(usuario);*/
-			
 	}
 
 }

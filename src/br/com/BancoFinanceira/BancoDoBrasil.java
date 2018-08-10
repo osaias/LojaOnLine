@@ -5,9 +5,14 @@ import java.util.Arrays;
 import com.thoughtworks.xstream.XStream;
 
 import Boleto.Boleto;
+import Util.ServicoTransporte;
+import Util.nomeTranspConverter;
 import br.com.cliente.Endereco;
 import br.com.compra.Pedido;
+import br.com.compra.Produto;
+import br.com.frete.Frete;
 import br.com.loja.Loja;
+import br.com.transportadora.Transportadora;
 import simulador.servicos.externos.ServicosBcoBrasil;
 
 public class BancoDoBrasil extends Agencia{
@@ -43,6 +48,14 @@ public class BancoDoBrasil extends Agencia{
 
 		XStream xs = new XStream();
 		xs.alias("pedido", Pedido.class);
+		xs.alias("produto", Produto.class);
+		xs.aliasSystemAttribute("nome", "class");
+		xs.aliasType("", Transportadora.class);
+		xs.aliasField("transportadora", Frete.class, "transportador");
+		xs.addDefaultImplementation(Frete.class,ServicoTransporte.class);
+
+		xs.setMode(XStream.NO_REFERENCES);
+		xs.registerLocalConverter(Frete.class, "transportador", new nomeTranspConverter());
 		String pedidoXml = xs.toXML(pedido);
 		
 		String boletoXml = new ServicosBcoBrasil().gerarBoleto(pedidoXml);

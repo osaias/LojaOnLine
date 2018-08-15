@@ -13,7 +13,7 @@ import br.com.compra.Produto;
 import br.com.frete.Frete;
 import br.com.loja.Loja;
 import br.com.transportadora.Transportadora;
-import simulador.servicos.externos.ServicosBcoBrasil;
+import simulador.servicos.externos.servicosBcoBrasil.ServicosBcoBrasil;
 
 public class BancoDoBrasil extends Agencia{
 

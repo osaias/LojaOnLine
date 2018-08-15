@@ -18,12 +18,12 @@ import br.com.compra.Pedido;
 import br.com.frete.Frete;
 import br.com.pagamento.FormaPgto;
 import br.com.transportadora.Transportadora;
-import simulador.servicos.externos.ServicosBcoBrasil;
 import simulador.servicos.externos.ServicosBraspress;
 import simulador.servicos.externos.ServicosCorreio;
 import simulador.servicos.externos.ServicosFedex;
 import simulador.servicos.externos.ServicosJadlog;
 import simulador.servicos.externos.ServicosTotalExpress;
+import simulador.servicos.externos.servicosBcoBrasil.ServicosBcoBrasil;
 
 public class GestorDeServicos {
 	

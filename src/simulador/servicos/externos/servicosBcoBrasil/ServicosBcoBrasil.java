@@ -1,9 +1,7 @@
 package simulador.servicos.externos.servicosBcoBrasil;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+
 import java.util.Random;
 
 import com.thoughtworks.xstream.XStream;
@@ -12,23 +10,26 @@ public class ServicosBcoBrasil {
 
 	public String gerarBoleto(String pedido){
 		
-		//pode ser usado qualquer biblioteca Stream, SAX, Java
-		XStream xs = lerXml();
+		Beneficiario beneficiario = new Beneficiario();
+		Pagador pagador = new Pagador();
 		
+		XStream xs = lerXml();
 		Boleto boleto = (Boleto) xs.fromXML(pedido);
  
-		boleto.getBeneficiario().setAgencia(1559);
-		boleto.getBeneficiario().setDvAgencia(1);
-		boleto.getBeneficiario().setCarteira(18);
-		boleto.getBeneficiario().setCodigo(new Random().nextInt());
-		boleto.getBeneficiario().setConvenio("Convenio Brasil Boleto");
-
-		boleto.setGeracao(new Data());
+		boleto.setAgenciaBeneficiario(String.valueOf(beneficiario.getAgencia()));
+		boleto.setCodigoBeneficiario(beneficiario.getCodigo() + "-" + beneficiario.getDvAgencia());
+		boleto.setEmissao(new Data());
+		boleto.setVencimento(gerarVencimentoBoleto());
+		boleto.setNumeroDocumento(new Random().nextInt(99999999));
+		boleto.setNossoNumero(boleto.getBeneficiario().getNumero());
+		boleto.setCarteira(beneficiario.getCarteira() + "");
 		boleto.setInstrucoes("Pagavel em qualquer agencia até o vencimento.");
 		boleto.setLocalPagamento(Arrays.asList(LocalPgto.BANCODOBRASIL, LocalPgto.CASAS_LOTERICAS));
-		boleto.setNumero(new Random().nextLong());
-		boleto.setProcessamento(new Data());
-		boleto.setVencimento(gerarVencimentoBoleto());
+		boleto.setEnderecoPagador(boleto.getPagador().getEndereco());
+		boleto.setCodigoBarras(boleto.getNumeroBanco() + new Random().nextInt(99) + "." + new Random().nextInt(99999) + 
+				" " + new Random().nextInt(99999) +	"." + new Random().nextInt(999999) + 
+				" " + new Random().nextInt(99999) +	"." + new Random().nextInt(999999) + 
+				" " + new Random().nextInt(9) + " " + new Random().nextInt(99999999) + new Random().nextInt(99999999));
 
 		String xml = gerarXml(boleto);
 		return xml;
@@ -39,10 +40,10 @@ public class ServicosBcoBrasil {
 		
 		XStream xs = new XStream();
 		xs.alias("boleto", Boleto.class);
-		xs.aliasField("agencia", Beneficiario.class, "agencia");
-		xs.aliasField("dvAgencia", Beneficiario.class, "dvAgencia");
-		xs.omitField(Boleto.class, "endereco");
-		xs.omitField(Boleto.class, "processamento");
+		xs.setMode(XStream.NO_REFERENCES);
+		xs.alias("LocalPagamento", LocalPgto.class);
+		xs.addImplicitArray(Boleto.class, "localPagamento");
+		
 		String xml = xs.toXML(boleto);
 		return xml;
 	}
@@ -51,18 +52,17 @@ public class ServicosBcoBrasil {
 		XStream xs = new XStream();
 		xs.alias("pedido", Boleto.class);
 		xs.aliasField("total", Boleto.class, "valor");
+		xs.aliasField("loja", Boleto.class, "beneficiario");
+		xs.aliasField("usuario", Boleto.class, "pagador");
 		xs.omitField(Boleto.class, "formaPgto");
 		xs.omitField(Boleto.class, "status");
 		xs.omitField(Boleto.class, "frete");
-		xs.aliasField("enderecoEntrega", Boleto.class, "endereco");
-		xs.aliasField("usuario", Boleto.class, "pagador");
-		xs.omitField(Pagador.class, "id");
-		xs.omitField(Pagador.class, "endereco");
-		xs.omitField(Pagador.class, "logado");
+		xs.omitField(Boleto.class, "numero");
+		xs.omitField(Boleto.class, "enderecoEntrega");
 		xs.omitField(Boleto.class, "produtos");
-		xs.aliasField("loja", Boleto.class, "beneficiario");
-		xs.aliasField("numero", Beneficiario.class, "nossoNumero");
-		xs.omitField(Beneficiario.class, "endereco");
+		xs.omitField(Pagador.class, "id");
+		xs.omitField(Pagador.class, "logado");
+
 		return xs;
 	}
 
@@ -109,9 +109,9 @@ public class ServicosBcoBrasil {
 				"    <celular>0</celular>" + 
 				"    <endereco>" + 
 				"      <numero>0</numero>" + 
-				"      <cep>06915-520</cep>" + 
-				"      <cidade>Mogi</cidade>" + 
-				"      <uf>AP</uf>" + 
+				"      <cep>08577-520</cep>" + 
+				"      <cidade>Itaqua</cidade>" + 
+				"      <uf>SP</uf>" + 
 				"      <nacionalidade>Brasil</nacionalidade>" + 
 				"    </endereco>" + 
 				"    <logado>false</logado>" + 

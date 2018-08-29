@@ -12,8 +12,7 @@ public abstract class Pessoa {
 	private int celular;
 	
 	
-	public Pessoa(String nome, String cpfCnpj) {
-		super();
+	public Pessoa(String nome, String cpfCnpj, int telefone, int celular) {
 		this.nome = nome;
 		
 		if (cpfCnpj.replaceAll("[^0-9]","").length() == 11) {
@@ -25,6 +24,9 @@ public abstract class Pessoa {
 			this.cnpj = cpfCnpj;
 			this.cpf = "";
 		}
+		
+		this.telefone = telefone;
+		this.celular = celular;
 	}
 	
 	public Pessoa() {

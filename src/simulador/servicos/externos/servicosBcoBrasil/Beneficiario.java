@@ -21,6 +21,41 @@ public class Beneficiario {
 	}
 
 	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
+	public void setConvenio(String convenio) {
+		this.convenio = convenio;
+	}
+
+
+	public void setCarteira(String carteira) {
+		this.carteira = carteira;
+	}
+
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
+	}
+
+
+	public void setDvAgencia(int dvAgencia) {
+		this.dvAgencia = dvAgencia;
+	}
+
+
 	public String getNome() {
 		return nome;
 	}

@@ -23,10 +23,8 @@ public class Boleto {
 	private String instrucoes;  
 	private List<LocalPgto> localPagamento;
 	
-	public Boleto() {
-		this.numeroBanco = "001";
-		this.beneficiario = new Beneficiario();
-		this.pagador = new Pagador();
+	public void setNumeroBanco(String numeroBanco) {
+		this.numeroBanco = numeroBanco;
 	}
 
 	public String getNumeroBanco() {

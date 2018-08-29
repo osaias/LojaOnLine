@@ -2,7 +2,6 @@ package simulador.processos;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -34,8 +33,11 @@ public class PaginaCarrinho {
 		}
 		
 		ItemCarrinho item= new ItemCarrinho();
-		item.setProduto(produto);
+		item.setProduto(dao.pegarProduto(produto));
+
 		carrinho.adiciona(item);
+
+		
 
 		Sessao.setAtributo("carrinho", carrinho);
 

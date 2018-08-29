@@ -1,7 +1,6 @@
 package simulador.servicos.externos.servicosBcoBrasil;
 
 import java.util.Arrays;
-
 import java.util.Random;
 
 import com.thoughtworks.xstream.XStream;
@@ -16,8 +15,12 @@ public class ServicosBcoBrasil {
 		XStream xs = lerXml();
 		Boleto boleto = (Boleto) xs.fromXML(pedido);
  
+		boleto.setNumeroBanco("001");
 		boleto.setAgenciaBeneficiario(String.valueOf(beneficiario.getAgencia()));
 		boleto.setCodigoBeneficiario(beneficiario.getCodigo() + "-" + beneficiario.getDvAgencia());
+		boleto.getBeneficiario().setCodigo(beneficiario.getCodigo());
+		boleto.getBeneficiario().setAgencia(beneficiario.getAgencia());
+		boleto.getBeneficiario().setDvAgencia(beneficiario.getDvAgencia());
 		boleto.setEmissao(new Data());
 		boleto.setVencimento(gerarVencimentoBoleto());
 		boleto.setNumeroDocumento(new Random().nextInt(99999999));
@@ -141,6 +144,7 @@ public class ServicosBcoBrasil {
 				"    </endereco>" + 
 				"  </loja>" + 
 				"</pedido>";
-		serv.gerarBoleto(pedido );
+		String boleto = serv.gerarBoleto(pedido );
+		System.out.println(boleto);
 	}
 }

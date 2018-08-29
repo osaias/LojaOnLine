@@ -42,13 +42,5 @@ public class UsuarioDAO {
 		return lista;
 	}
 	
-	public static void main(String[] args) {
 
-		UsuarioDAO dao = new UsuarioDAO();
-		Usuario usuario = new Usuario("Maria", "030.897.898-00");
-		dao.cadastrar(usuario);
-		usuario = dao.consultar(usuario);
-		Map<String, Usuario> us = TabelaUsuarios.getUsuarios();
-
-	}
 }

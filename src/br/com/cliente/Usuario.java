@@ -2,14 +2,15 @@ package br.com.cliente;
 
 public class Usuario extends Pessoa{
 
-	public Usuario(String nome, String cpfCnpj) {
-		super(nome, cpfCnpj);
-
+	public Usuario(String nome, String cpfCnpj, int telefone, int celular) {
+		super(nome, cpfCnpj, telefone, celular);
+		// TODO Auto-generated constructor stub
 	}
 	
 	public Usuario() {
 
 	}
+
 
 	private Login login;
 	private Endereco endereco;

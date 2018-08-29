@@ -108,6 +108,11 @@ public final class TabelaProdutos {
 		CATEGORIAS.put(categoria, produtos);
 	}
 
+	public static void remover(Produto produto) {
+		
+		PRODUTOS.remove(produto.getId());
+	}
+	
 	public static Collection<Produto> getProdutos() {
 		return PRODUTOS.values();
 	}

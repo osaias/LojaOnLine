@@ -1,5 +1,6 @@
 package br.com.BancoFinanceira;
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import com.thoughtworks.xstream.XStream;
@@ -46,6 +47,33 @@ public class BancoDoBrasil extends Agencia{
 	@Override
 	public Boleto getBoleto(Pedido pedido) {
 
+		String pedidoXml = gerarXml(pedido);
+		
+		String boletoXml = new ServicosBcoBrasil().gerarBoleto(pedidoXml);
+	 
+		Boleto boleto = lerXML(boletoXml);
+		
+		return boleto;
+	}
+
+	private Boleto lerXML(String boletoXml) {
+
+		XStream xs = new XStream();
+		xs.alias("boleto", Boleto.class);
+		xs.aliasField("pagador", Boleto.class, "sacado");
+		xs.aliasField("beneficiario", Boleto.class, "cedente");
+		xs.aliasField("emissao", Boleto.class, "processamento");
+		xs.omitField(Boleto.class, "numeroBanco");
+		xs.aliasField("agenciaBeneficiario", Boleto.class, "agencia");
+		xs.aliasField("codigoBeneficiario", Boleto.class, "codigoCedente");
+		xs.omitField(Boleto.class, "enderecoPagador");
+		xs.addImplicitCollection(Boleto.class, "localPagamento", String.class);
+		
+		return  (Boleto) xs.fromXML(boletoXml);
+	}
+
+	private String gerarXml(Pedido pedido) {
+
 		XStream xs = new XStream();
 		xs.alias("pedido", Pedido.class);
 		xs.alias("produto", Produto.class);
@@ -56,16 +84,84 @@ public class BancoDoBrasil extends Agencia{
 		xs.setMode(XStream.NO_REFERENCES);
 		xs.registerLocalConverter(Frete.class, "transportador", new nomeTranspConverter());
 		
-		String pedidoXml = xs.toXML(pedido);
+		return xs.toXML(pedido);
 		
-		String boletoXml = new ServicosBcoBrasil().gerarBoleto(pedidoXml);
-		
-		Boleto boleto = (Boleto) xs.fromXML(boletoXml);
-		
-		return boleto;
 	}
 
 
+	public static void main(String[] args) throws FileNotFoundException {
+
+		String xml = "<boleto>" + 
+				"  <numeroDocumento>18189159</numeroDocumento>" + 
+				"  <numeroBanco>001</numeroBanco>" + 
+				"  <agenciaBeneficiario>1559</agenciaBeneficiario>" + 
+				"  <codigoBeneficiario>254879-1</codigoBeneficiario>" + 
+				"  <codigoBarras>00188.3114 7223.194298 36925.719735 7 242659512417416</codigoBarras>" + 
+				"  <carteira>06</carteira>" + 
+				"  <enderecoPagador>" + 
+				"    <numero>0</numero>" + 
+				"    <cep>06915-520</cep>" + 
+				"    <cidade>Mogi</cidade>" + 
+				"    <uf>AP</uf>" + 
+				"    <nacionalidade>Brasil</nacionalidade>" + 
+				"  </enderecoPagador>" + 
+				"  <vencimento>" + 
+				"    <dia>35</dia>" + 
+				"    <mes>7</mes>" + 
+				"    <ano>2018</ano>" + 
+				"    <hora>1</hora>" + 
+				"    <minutos>3</minutos>" + 
+				"    <segundos>25</segundos>" + 
+				"  </vencimento>" + 
+				"  <emissao>" + 
+				"    <dia>30</dia>" + 
+				"    <mes>7</mes>" + 
+				"    <ano>2018</ano>" + 
+				"    <hora>1</hora>" + 
+				"    <minutos>3</minutos>" + 
+				"    <segundos>25</segundos>" + 
+				"  </emissao>" + 
+				"  <beneficiario>" + 
+				"    <nome>Loja Online Inc.</nome>" + 
+				"    <numero>11100212</numero>" + 
+				"    <endereco>" + 
+				"      <numero>0</numero>" + 
+				"      <cep>07600-100</cep>" + 
+				"      <cidade>Mairiporã</cidade>" + 
+				"      <uf>SP</uf>" + 
+				"      <nacionalidade>Brasil</nacionalidade>" + 
+				"    </endereco>" + 
+				"    <codigo>254879</codigo>" + 
+				"    <agencia>1559</agencia>" + 
+				"    <dvAgencia>1</dvAgencia>" + 
+				"  </beneficiario>" + 
+				"  <pagador>" + 
+				"    <nome>Osaias</nome>" + 
+				"    <cpf>320.569.108-37</cpf>" + 
+				"    <cnpj></cnpj>" + 
+				"    <telefone>42563987</telefone>" + 
+				"    <celular>945679857</celular>" + 
+				"    <endereco>" + 
+				"      <numero>0</numero>" + 
+				"      <cep>06915-520</cep>" + 
+				"      <cidade>Mogi</cidade>" + 
+				"      <uf>AP</uf>" + 
+				"      <nacionalidade>Brasil</nacionalidade>" + 
+				"    </endereco>" + 
+				"  </pagador>" + 
+				"  <valor>11000.0</valor>" + 
+				"  <nossoNumero>11100212</nossoNumero>" + 
+				"  <instrucoes>Pagavel em qualquer agencia até o vencimento.</instrucoes>" + 
+				"  <localPagamento>BANCODOBRASIL</localPagamento>" + 
+				"  <localPagamento>CASAS_LOTERICAS</localPagamento>" + 
+				"</boleto>";
+		BancoDoBrasil bb = new BancoDoBrasil();
+		
+		Boleto boleto = bb.lerXML(xml);
+		
+		System.out.println(boleto);
+		
+	}
 
 
 }

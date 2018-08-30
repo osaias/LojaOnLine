@@ -6,7 +6,7 @@ public class Beneficiario {
 
 	private String nome;
 	private Endereco endereco;
-	private long nossoNumero;
+	private long numero;
 	private String convenio;
 	private long carteira;
 	private int codigo;
@@ -26,11 +26,11 @@ public class Beneficiario {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	public long getNossoNumero() {
-		return nossoNumero;
+	public long getNumero() {
+		return numero;
 	}
-	public void setNossoNumero(long nossoNumero) {
-		this.nossoNumero = nossoNumero;
+	public void setNumero(long numero) {
+		this.numero = numero;
 	}
 	public String getConvenio() {
 		return convenio;

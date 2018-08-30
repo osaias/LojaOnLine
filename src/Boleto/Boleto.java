@@ -1,30 +1,42 @@
 package Boleto;
 
-import java.math.BigDecimal;
 import java.util.List;
-
-import br.com.BancoFinanceira.Agencia;
 
 public class Boleto {
 
-	private Agencia agencia;  
-	private Data vencimento; 
+	private List<String>localPagamento;
+	private String localPgto;
+	private Beneficiario cedente;
+	private Data vencimento;
 	private Data processamento;
-	private Data geracao;
-	private Beneficiario beneficiario;  
-	private Pagador pagador; 
-	private BigDecimal valor; 
-	private long numero;  
-	private String instrucoes;  
-	private List<LocalPgto> localPagamento;
-
-
-	public Agencia getAgencia() {
-		return agencia;
-	}
+	private Data dataDocumento;
+	private int numeroDocumento;
+	private String carteira;
+	private String instrucoes;
+	private Pagador sacado;
+	private int agencia;
+	private String codigoCedente;
+	private int nossoNumero;
+	private double valor;
+	private String codigoBarras;
 	
-	public void setAgencia(Agencia agencia) {
-		this.agencia = agencia;
+	public List<String> getLocalPagamento() {
+		return localPagamento;
+	}
+	public void setLocalPagamento(List<String> localPagamento) {
+		this.localPagamento = localPagamento;
+	}
+	public String getLocalPgto() {
+		return localPgto;
+	}
+	public void setLocalPgto(String localPgto) {
+		this.localPgto = localPgto;
+	}
+	public Beneficiario getCedente() {
+		return cedente;
+	}
+	public void setCedente(Beneficiario cedente) {
+		this.cedente = cedente;
 	}
 	public Data getVencimento() {
 		return vencimento;
@@ -38,35 +50,23 @@ public class Boleto {
 	public void setProcessamento(Data processamento) {
 		this.processamento = processamento;
 	}
-	public Data getGeracao() {
-		return geracao;
+	public Data getDataDocumento() {
+		return dataDocumento;
 	}
-	public void setGeracao(Data geracao) {
-		this.geracao = geracao;
+	public void setDataDocumento(Data dataDocumento) {
+		this.dataDocumento = dataDocumento;
 	}
-	public Beneficiario getBeneficiario() {
-		return beneficiario;
+	public int getNumeroDocumento() {
+		return numeroDocumento;
 	}
-	public void setBeneficiario(Beneficiario beneficiario) {
-		this.beneficiario = beneficiario;
+	public void setNumeroDocumento(int numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
 	}
-	public Pagador getPagador() {
-		return pagador;
+	public String getCarteira() {
+		return carteira;
 	}
-	public void setPagador(Pagador pagador) {
-		this.pagador = pagador;
-	}
-	public BigDecimal getValor() {
-		return valor;
-	}
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-	public long getNumero() {
-		return numero;
-	}
-	public void setNumero(long numero) {
-		this.numero = numero;
+	public void setCarteira(String carteira) {
+		this.carteira = carteira;
 	}
 	public String getInstrucoes() {
 		return instrucoes;
@@ -74,12 +74,40 @@ public class Boleto {
 	public void setInstrucoes(String instrucoes) {
 		this.instrucoes = instrucoes;
 	}
-	public List<LocalPgto> getLocalPagamento() {
-		return localPagamento;
+	public Pagador getSacado() {
+		return sacado;
 	}
-	public void setLocalPagamento(List<LocalPgto> localPagamento) {
-		this.localPagamento = localPagamento;
+	public void setSacado(Pagador sacado) {
+		this.sacado = sacado;
 	}
-
-
+	public int getAgencia() {
+		return agencia;
+	}
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
+	}
+	public String getCodigoCedente() {
+		return codigoCedente;
+	}
+	public void setCodigoCedente(String codigoCedente) {
+		this.codigoCedente = codigoCedente;
+	}
+	public int getNossoNumero() {
+		return nossoNumero;
+	}
+	public void setNossoNumero(int nossoNumero) {
+		this.nossoNumero = nossoNumero;
+	}
+	public double getValor() {
+		return valor;
+	}
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+	public String getCodigoBarras() {
+		return codigoBarras;
+	}
+	public void setCodigoBarras(String codigoBarras) {
+		this.codigoBarras = codigoBarras;
+	}
 }

@@ -44,7 +44,7 @@ public class ServicosBcoBrasil {
 		XStream xs = new XStream();
 		xs.alias("boleto", Boleto.class);
 		xs.setMode(XStream.NO_REFERENCES);
-		xs.alias("LocalPagamento", LocalPgto.class);
+		xs.alias("localPagamento", LocalPgto.class);
 		xs.addImplicitArray(Boleto.class, "localPagamento");
 		
 		String xml = xs.toXML(boleto);

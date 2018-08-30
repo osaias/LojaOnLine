@@ -37,8 +37,6 @@ public class PaginaCarrinho {
 
 		carrinho.adiciona(item);
 
-		
-
 		Sessao.setAtributo("carrinho", carrinho);
 
 	}
@@ -144,23 +142,33 @@ public class PaginaCarrinho {
 		
 		carrinho = (CarrinhoDeCompra) Sessao.getAtributo("carrinho");
 		
-		List<ItemCarrinho> lista = new ArrayList<>();
-		List<ItemCarrinho> produtos = new ArrayList<>();
+		List<ItemCarrinho> produtosParaFiltrar = new ArrayList<>();
+		List<ItemCarrinho> produtosParaExibir = new ArrayList<>();
 		Set<ItemCarrinho> itens = carrinho.getItens();
-		lista.addAll(itens);
-		//mecher aqui
-		produtos.add(0, lista.get(0));
+		produtosParaFiltrar.addAll(itens);
 		
-		for (ItemCarrinho item : itens) {
+		for (int i=0; i < produtosParaFiltrar.size(); i++) {
 			
-			for (int i = 0; i < produtos.size(); i++) {
-				if (!item.getProduto().getNome().equals(produtos.get(i).getProduto().getNome())) {
-					produtos.add(produtos.get(i));
+			if (produtosParaExibir.isEmpty()) {
+				produtosParaExibir.add(produtosParaFiltrar.get(i));
+				
+			} else {
+				int count = 0;
+				for (int j = 0; j < produtosParaExibir.size(); j++) {
+					
+					if (produtosParaExibir.get(j).getProduto().getNome().
+							equals(produtosParaFiltrar.get(i).getProduto().getNome())) {
+						count++;
+					}
+				}
+				
+				if (count == 0) {
+					produtosParaExibir.add(produtosParaFiltrar.get(i));
 				}
 			}
 		}
 
-		produtosParaExibir(produtos);
+		produtosParaExibir(produtosParaExibir);
 		exibirFormasPgto(carrinho);
 
 		System.out.println();

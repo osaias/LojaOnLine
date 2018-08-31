@@ -12,6 +12,10 @@ public class Loja {
 		numero = 11100212;
 		nome = "Loja Online Inc.";
 		endereco = new Endereco("07600-100", "Mairiporã", "SP", "Brasil");
+		endereco.setBairro("Vila das Flores");
+		endereco.setLogradouro("Rua Margarida");
+		endereco.setNumero(887);
+		endereco.setComplemento("");
 	}
 	
 	public int getNumero() {
@@ -25,5 +29,11 @@ public class Loja {
 	public Endereco getEndereco() {
 		return endereco;
 		
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return nome.toUpperCase() + "\n" + endereco.toString();
 	}
 }

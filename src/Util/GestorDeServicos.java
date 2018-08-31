@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.thoughtworks.xstream.XStream;
-
 import Boleto.Boleto;
 import br.com.BancoFinanceira.Agencia;
 import br.com.BancoFinanceira.Financeira;
 import br.com.BancoFinanceira.TipoConvenio;
 import br.com.DAO.BancoDAO;
 import br.com.DAO.FinanceiraDAO;
+import br.com.DAO.PedidoDAO;
 import br.com.DAO.TransportadoraDAO;
 import br.com.compra.Pedido;
 import br.com.frete.Frete;
@@ -66,7 +65,7 @@ public class GestorDeServicos {
 		Transportadora transportador = (Transportadora) frete.getTransportador();
 		transportador.calcularFrete(frete);
 		//this.transportadores.add(transportador);
-		Map<String, BigDecimal> fretesTransportadora = ((Transportadora) transportador).getFretes();
+		Map<String, BigDecimal> fretesTransportadora = transportador.getFretes();
 		
 		if (fretesTransportadora != null) {
 			transportadorasComFrete.add(transportador);
@@ -75,7 +74,7 @@ public class GestorDeServicos {
 		return fretesTransportadora;
 	}
 	
-	public void gerarBoleto(Pedido pedido) {
+	public boolean gerarBoleto(Pedido pedido) {
 		
 		if (!pedido.getFormaPgto().equals(FormaPgto.BOLETO)) {
 			throw new IllegalArgumentException("Forma de pgto não é compativel com boleto");
@@ -92,13 +91,34 @@ public class GestorDeServicos {
 		Agencia agencia = agencias[0];
 		
 		Boleto boleto = agencia.getBoleto(pedido);
-
-//		PedidoDAO pedidoDAO = new PedidoDAO();
-//		
-//		pedidoDAO.put();
 		
+		if (boleto != null) {
+			
+			PedidoDAO pedidoDAO = new PedidoDAO();
+			
+			if (pedidoDAO.cadastrar(pedido)) {
+				Sessao.setAtributo("boleto", boleto);
+				return true;
+			}
+		} 
+
+		return false;
 	}
 	
+	private void exibir(Boleto boleto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	private void exibir(Pedido pedido) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 	public List<Transportadora> getTransportadorasComFrete() {
 		return transportadorasComFrete;
 	}

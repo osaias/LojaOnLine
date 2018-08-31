@@ -1,3 +1,4 @@
+
 package simulador.processos;
 
 import java.math.BigDecimal;
@@ -10,7 +11,6 @@ import java.util.Set;
 
 import Util.Console;
 import Util.GestorDeServicos;
-import Util.Servico;
 import Util.ServicoTransporte;
 import Util.Sessao;
 import br.com.DAO.EnderecoDAO;
@@ -24,7 +24,6 @@ import br.com.frete.Frete;
 import br.com.loja.Loja;
 import br.com.pagamento.FormaPgto;
 import br.com.transportadora.Transportadora;
-import simulador.servicos.externos.ServicosCorreio.Servicos;
 
 public class PaginaPedido {
 

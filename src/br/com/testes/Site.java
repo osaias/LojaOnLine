@@ -15,6 +15,7 @@ import simulador.processos.PaginaPagamento;
 import simulador.processos.PaginaPedido;
 import simulador.processos.PaginaPrincipal;
 import simulador.processos.PaginaProduto;
+import simulador.processos.PaginaResultado;
 
 public class Site {
 
@@ -29,6 +30,7 @@ public class Site {
 		PaginaLogin pagLogin = new PaginaLogin();
 		PaginaPedido pagPed = new PaginaPedido();
 		PaginaPagamento pagPag = new PaginaPagamento();
+		PaginaResultado pagRes = null;
 		
 		do {
 			
@@ -147,7 +149,15 @@ public class Site {
 					break;
 					
 				case 10:
-					pagPag.gerarBoleto();
+					//exibir resultado da compra
+					if (pagPag.gerarBoleto()) {
+						
+						pagRes = new PaginaResultado("sucesso");
+						pagRes.exibir();
+					} else {
+						pagRes = new PaginaResultado("Não foi possivel realizar seu pedido!!!");
+						pagRes.exibirErro();
+					}
 					break;
 					
 				case 11:

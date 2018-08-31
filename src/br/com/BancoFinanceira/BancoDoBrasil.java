@@ -6,6 +6,7 @@ import java.util.Arrays;
 import com.thoughtworks.xstream.XStream;
 
 import Boleto.Boleto;
+import Boleto.Data;
 import Util.ServicoTransporte;
 import Util.nomeTranspConverter;
 import br.com.cliente.Endereco;
@@ -52,6 +53,8 @@ public class BancoDoBrasil extends Agencia{
 		String boletoXml = new ServicosBcoBrasil().gerarBoleto(pedidoXml);
 	 
 		Boleto boleto = lerXML(boletoXml);
+		
+		boleto.setDataDocumento(new Data());
 		
 		return boleto;
 	}

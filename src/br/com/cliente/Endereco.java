@@ -11,7 +11,6 @@ public class Endereco {
 	private String uf;
 	private String nacionalidade;
 	
-	
 	public Endereco(String cep, String cidade, String uf, String nacionalidade) {
 		super();
 		this.cep = cep;
@@ -88,5 +87,10 @@ public class Endereco {
 		this.nacionalidade = nacionalidade;
 	}
 	
-	
+	@Override
+	public String toString() {
+
+		return logradouro + ", " + numero + " - "+ complemento + " " +
+				bairro + ", " + cidade + ", " + uf + ", " + nacionalidade + " - " + cep;
+	}
 }

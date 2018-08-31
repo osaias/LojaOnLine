@@ -10,14 +10,12 @@ import br.com.BancoFinanceira.TipoConvenio;
 import br.com.DAO.BancoDAO;
 import br.com.cliente.Usuario;
 import br.com.compra.Pedido;
-import br.com.loja.Loja;
-import br.com.pagamento.FormaPgto;
 
 public class PaginaPagamento {
 
 	GestorDeServicos gestor = new GestorDeServicos();
 	
-	public void gerarBoleto() {
+	public boolean gerarBoleto() {
 
 		Usuario usuario = (Usuario) Sessao.getAtributo("usuario");
 		Pedido pedido = (Pedido) Sessao.getAtributo("pedido");
@@ -38,7 +36,7 @@ public class PaginaPagamento {
 
 					if (gestor.conectar(agencia)) {
 						
-						gestor.gerarBoleto(pedido);
+						 return gestor.gerarBoleto(pedido);
 					}
 				
 					break;
@@ -46,7 +44,7 @@ public class PaginaPagamento {
 			}
 			
 		}
-
+		return false;
 
 	}
 	/*

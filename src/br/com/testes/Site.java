@@ -8,6 +8,7 @@ import java.util.Set;
 import Util.Sessao;
 import br.com.cliente.Usuario;
 import br.com.compra.Produto;
+import simulador.processos.PaginaBoleto;
 import simulador.processos.PaginaCadastroUsuario;
 import simulador.processos.PaginaCarrinho;
 import simulador.processos.PaginaLogin;
@@ -31,6 +32,7 @@ public class Site {
 		PaginaPedido pagPed = new PaginaPedido();
 		PaginaPagamento pagPag = new PaginaPagamento();
 		PaginaResultado pagRes = null;
+		PaginaBoleto pagBol = new PaginaBoleto();
 		
 		do {
 			
@@ -152,8 +154,9 @@ public class Site {
 					//exibir resultado da compra
 					if (pagPag.gerarBoleto()) {
 						
-						pagRes = new PaginaResultado("sucesso");
+						pagRes = new PaginaResultado("pedido realizado com sucesso");
 						pagRes.exibir();
+						pagBol.exibir();
 					} else {
 						pagRes = new PaginaResultado("Não foi possivel realizar seu pedido!!!");
 						pagRes.exibirErro();
